@@ -1,3 +1,4 @@
+from typing import Literal
 import joblib
 import numpy as np
 from fastapi import FastAPI, HTTPException, Query
@@ -20,7 +21,7 @@ def health():
 @app.get("/recommend/{user_id}")
 def recommend_for_user(
     user_id: int,
-    model: str = Query("hybrid", enum=["hybrid", "collaborative", "content"]),
+    model: Literal["hybrid", "collaborative", "content"] = Query("hybrid"),
     k: int = Query(10, ge=1, le=50),
 ):
     if user_id not in USER_TO_IDX:
